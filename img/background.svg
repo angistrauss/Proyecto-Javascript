@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1919.06 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #48ac38;
+        filter: url(#drop-shadow-1);
+      }
+
+      .cls-3 {
+        isolation: isolate;
+      }
+
+      .cls-4 {
+        mix-blend-mode: multiply;
+      }
+
+      .cls-5 {
+        fill: #6eb64a;
+        filter: url(#drop-shadow-2);
+      }
+
+      .cls-6 {
+        fill: #016734;
+      }
+
+      .cls-7 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" width="1919.06" height="1080"/>
+    </clipPath>
+    <filter id="drop-shadow-1" x="-129.94" y="311" width="2172" height="2219" filterUnits="userSpaceOnUse">
+      <feOffset dx="-15" dy="-29"/>
+      <feGaussianBlur result="blur" stdDeviation="34"/>
+      <feFlood flood-color="#000" flood-opacity=".26"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-2" x="-128.94" y="631" width="2171" height="1510" filterUnits="userSpaceOnUse">
+      <feOffset dx="-15" dy="-29"/>
+      <feGaussianBlur result="blur-2" stdDeviation="34"/>
+      <feFlood flood-color="#000" flood-opacity=".26"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g class="cls-3">
+    <g id="Capa_2" data-name="Capa 2">
+      <g id="Capa_1-2" data-name="Capa 1">
+        <g class="cls-7">
+          <g class="cls-4">
+            <rect class="cls-6" x="0" y="-623.92" width="1966.16" height="2687.24"/>
+            <path class="cls-2" d="M1095.25,602.66C253.85,224.31,22.14,625.92-12.88,701.62v1310.62s1.72,444.11,1.72,444.11C1648.46,1616.13,1954.15,908.98,1954.15,908.98c0,0-114.26,28.52-858.9-306.32Z"/>
+            <path class="cls-5" d="M-11.72,2027.69s333.69-761.49,988.91-891.27c604.65-119.76,959.53-373.68,959.53-373.68l17.44,1304.59-1965.88-.54"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
