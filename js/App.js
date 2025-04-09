@@ -1,60 +1,133 @@
-function validarDatos(nombre, email, asistencia, anoNacimiento, profesion, dni) {
-    if (!nombre || !email || !anoNacimiento || !profesion || !dni) {
-        alert("Por favor, completa todos los campos obligatorios.");
+class Asistente {
+    constructor(nombre, email, dni, anoNacimiento, profesion, asistencia, comentarios) {
+        this.nombre = nombre;
+        this.email = email;
+        this.dni = dni;
+        this.anoNacimiento = anoNacimiento;
+        this.profesion = profesion;
+        this.asistencia = asistencia;
+        this.comentarios = comentarios || "Ninguno";
+    }
+}
+
+const formulario = document.getElementById('formulario');
+const dniInput = document.getElementById('dni');
+const dniError = document.getElementById('dni-error');
+const abrirBtn = document.getElementById('abrirDrawerAsistentes');
+const cerrarBtn = document.getElementById('cerrarDrawerAsistentes');
+const drawer = document.getElementById('drawerAsistentes');
+const listaAsistentes = document.getElementById('lista-asistentes');
+const modal = document.getElementById('modalConfirmacion');
+const confirmarBorrado = document.getElementById('confirmarBorrado');
+const cancelarBorrado = document.getElementById('cancelarBorrado');
+const borrarBtn = document.getElementById('borrarRegistros');
+
+let asistentes = JSON.parse(localStorage.getItem('asistentes')) || [];
+    
+    if (asistentes.length > 0) {
+        abrirBtn.style.display = 'inline-block';
+        renderizarAsistentes(asistentes);
+    }
+
+function guardarEnLocalStorage() {
+    localStorage.setItem('asistentes', JSON.stringify(asistentes));
+}
+
+function renderizarAsistentes(lista) {
+    listaAsistentes.innerHTML = '';
+
+    if (lista.length === 0) {
+        listaAsistentes.innerHTML = '<p>No hay inscripciones aún.</p>';
+        return;
+    }
+
+    lista.forEach((asistente, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card-asistente');
+        card.innerHTML = `
+            <p><strong>${index + 1}. ${asistente.nombre}</strong></p>
+            <p>Email: ${asistente.email}</p>
+            <p>DNI: ${asistente.dni}</p>
+            <p>Año de nacimiento: ${asistente.anoNacimiento}</p>
+            <p>Profesión: ${asistente.profesion}</p>
+            <p>Asistencia: ${asistente.asistencia}</p>
+            <p>Comentarios: ${asistente.comentarios}</p>
+        `;
+        listaAsistentes.appendChild(card);
+    });
+}
+
+function validarFormulario(data) {
+    const { nombre, email, dni, anoNacimiento, profesion, asistencia } = data;
+    dniError.textContent = '';
+
+    if (!nombre || !email || !dni || !anoNacimiento || !profesion || !asistencia) {
+        mostrarMensaje("Por favor, completá todos los campos obligatorios.", "error");
         return false;
     }
 
-    if (!asistencia) {
-        alert("Por favor, selecciona si asistirás o no al evento.");
+    if (!/^\d{8}$/.test(dni.trim())) {
+        dniError.textContent = "El DNI debe ser un número de 8 dígitos.";
         return false;
     }
-
-    dni = dni.trim(); 
-
-    if (!/^\d{8}$/.test(dni)) {
-        alert("El DNI ingresado no es válido. Debe ser un número de 8 dígitos.");
-        return false;
-    }
-
     return true;
 }
 
-function procesarDatos(nombre, email, asistencia, anoNacimiento, profesion, comentarios, dni) {
-    return {
-        nombre,
-        email,
-        asistencia: asistencia ? "Sí" : "No",
-        anoNacimiento,
-        profesion,
-        comentarios: comentarios || "Ninguno",
-        dni
-    };
+function mostrarMensaje(texto, tipo) {
+    const mensaje = document.createElement('p');
+    mensaje.textContent = texto;
+    mensaje.className = tipo === 'error' ? 'mensaje error' : 'mensaje exito';
+    formulario.after(mensaje);
+    setTimeout(() => mensaje.remove(), 4000);
 }
 
-function mostrarResultado(datos) {
-    console.log("Datos del formulario:", datos);
-    alert(`Gracias por confirmar tu asistencia, ${datos.nombre}!\n\nAsistencia: ${datos.asistencia}\nAño de nacimiento: ${datos.anoNacimiento}\nProfesión: ${datos.profesion}\nComentarios: ${datos.comentarios}\nDNI: ${datos.dni}`);
-}
+formulario.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-function enviarFormulario() {
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
-    const asistencia = document.querySelector('input[name="asistencia"]:checked');
-    const anoNacimiento = document.getElementById('ano-nacimiento').value;
-    const profesion = document.getElementById('profesion').value;
-    const comentarios = document.getElementById('comentarios').value;
+    const nuevoAsistente = new Asistente(
+        document.getElementById('nombre').value.trim(),
+        document.getElementById('email').value.trim(),
+        dniInput.value.trim(),
+        document.getElementById('ano-nacimiento').value,
+        document.getElementById('profesion').value,
+        document.querySelector('input[name="asistencia"]:checked')?.value,
+        document.getElementById('comentarios').value.trim()
+    );
 
-
-let dni = prompt("Por favor, ingresa tu DNI (8 dígitos):");
-
-    if (validarDatos(nombre, email, asistencia.value, anoNacimiento, profesion, dni)) {
-        const confirmacion = confirm(`¿Estás seguro de que deseas confirmar tu asistencia, ${nombre}?`);
-
-        if (confirmacion) {
-            const datos = procesarDatos(nombre, email, asistencia.value, anoNacimiento, profesion, comentarios, dni);
-            mostrarResultado(datos);
-        } else {
-            alert("No se ha registrado tu asistencia.");
-        }
+    if (validarFormulario(nuevoAsistente)) {
+        asistentes.push(nuevoAsistente);
+        guardarEnLocalStorage();
+        renderizarAsistentes(asistentes);
+        mostrarMensaje("¡Inscripción registrada con éxito!", "exito");
+        formulario.reset();
+    
+        abrirBtn.style.display = 'inline-block';
+        drawer.classList.add('open');
     }
-}
+});
+
+abrirBtn.addEventListener('click', () => {
+    drawer.classList.add('open');
+});
+
+    cerrarBtn.addEventListener('click', () => {
+        drawer.classList.remove('open');
+    });
+
+borrarBtn.addEventListener('click', () => {
+    modal.classList.add('activo');
+});
+
+confirmarBorrado.addEventListener('click', () => {
+    asistentes = [];
+    localStorage.removeItem('asistentes');
+    renderizarAsistentes(asistentes);
+    drawer.classList.remove('open');
+    abrirBtn.style.display = 'none';
+    mostrarMensaje("Todos los registros fueron eliminados.", "exito");
+    modal.classList.remove('activo');
+});
+
+cancelarBorrado.addEventListener('click', () => {
+    modal.classList.remove('activo');
+});

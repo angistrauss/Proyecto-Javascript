@@ -1,12 +1,13 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(211, 255, 223);
-    background-size: cover; 
+    font-family: Roboto, sans-serif;
+    background: url('../img/background.svg') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding: 0;
 }
 
 .form-container {
@@ -33,25 +34,42 @@ label {
     color: #555;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     padding: 12px;
-    margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 14px;
 }
 
+input:focus,
+select:focus,
+textarea:focus {
+    border: 2px solid #45a049;
+    outline: none;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input {
+    margin-bottom: 0;
+}
+
 input[type="radio"] {
-    margin-right: 10px; 
-    width: 18px;  
-    height: 18px; 
+    margin-right: 10px;
+    margin-top: 0;
+    width: 18px;
+    height: 18px;
 }
 
 .radio-container {
     display: flex;
-    align-items: center;
+    margin-top: 15px;
     gap: 10px;
     justify-content: center;
 }
@@ -60,7 +78,7 @@ input[type="radio"] {
     font-size: 16px;
     color: #555;
     font-weight: normal;
-    margin-right: 20px; 
+    margin-right: 20px;
 }
 
 .required {
@@ -86,6 +104,173 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #8eb09f;
+    color: #ffffff;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+    color: #333;
+    border: none;
+}
+
+.btn-danger {
+    background-color: #b80000;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #d40000;
+}
+
+.mensaje {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.mensaje.error {
+    color: red;
+    font-size: 0.75rem;
+    margin-top: 2px;
+    display: block;
+    justify-self: left;
+    font-weight: 600;
+}
+
+.mensaje.exito {
+    color: green;
+}
+
+.card-asistente {
+    background-color: #f8f8f8;
+    border-bottom: 4px solid #004026;
+    border-left: 4px solid #004026;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+}
+
+.card-asistente p {
+    margin: 6px 0;
+    font-size: 0.9rem;
+}
+
+.card-asistente p:first-child {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.drawer-asistentes {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-asistentes.open {
+    right: 0;
+}
+
+.drawer-header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    z-index: 10;
+}
+
+#cerrarDrawerAsistentes {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+#cerrarDrawerAsistentes:hover {
+    background-color: #eee;
+}
+
+.drawer-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 25px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.activo {
+    display: flex;
+}
+
+.modal-contenido {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-botones {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-botones button {
+    flex: 1;
 }
 
 @media (max-width: 600px) {
